@@ -1,6 +1,8 @@
 ﻿using NanoLeaf.API.Tests.TestHelpers;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,13 +13,18 @@ namespace NanoLeaf.API.Tests
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafEffects _nanoLeafEffects;
 
+        private string _apiMessage;
+
         public NanoLeafEffectsTests()
         {
             _responseMessage = new HttpResponseMessage();
             var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
 
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            Action<HttpRequestMessage, CancellationToken> callback
+                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
+            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
 
+            var apiContext = new NanoLeafApiContext("token", httpClient);
             _nanoLeafEffects = new NanoLeafEffects(apiContext);
         }
 
@@ -32,6 +39,16 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.Equal("Fireworks", currentEffect);
+        }
+
+        [Fact]
+        public async Task SetEffectAsync_Default_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafEffects.SetEffectAsync("Flames");
+
+            // Assert
+            Assert.Equal("{'select': 'Flames'}", _apiMessage);
         }
 
         [Fact]

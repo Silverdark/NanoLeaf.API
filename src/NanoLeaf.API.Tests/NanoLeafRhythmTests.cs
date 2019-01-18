@@ -1,5 +1,7 @@
 ﻿using NanoLeaf.API.Tests.TestHelpers;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -10,13 +12,18 @@ namespace NanoLeaf.API.Tests
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafRhythm _nanoLeafRhythm;
 
+        private string _apiMessage;
+
         public NanoLeafRhythmTests()
         {
             _responseMessage = new HttpResponseMessage();
             var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
 
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            Action<HttpRequestMessage, CancellationToken> callback
+                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
+            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
 
+            var apiContext = new NanoLeafApiContext("token", httpClient);
             _nanoLeafRhythm = new NanoLeafRhythm(apiContext);
         }
 
@@ -140,6 +147,16 @@ namespace NanoLeaf.API.Tests
         }
 
         [Fact]
+        public async Task SetUseMicrophoneAsync_UseMicrophone_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafRhythm.SetUseMicrophoneAsync();
+
+            // Assert
+            Assert.Equal("{'rhythmMode': 0}", _apiMessage);
+        }
+
+        [Fact]
         public async Task UsesMicrophoneAsync_UsesAuxCable_ReturnsFalse()
         {
             // Arrange
@@ -202,6 +219,16 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(usesAuxCable);
+        }
+
+        [Fact]
+        public async Task SetUseAuxCableAsync_UseAuxCable_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafRhythm.SetUseAuxCableAsync();
+
+            // Assert
+            Assert.Equal("{'rhythmMode': 1}", _apiMessage);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using NanoLeaf.API.Tests.TestHelpers;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -10,13 +12,18 @@ namespace NanoLeaf.API.Tests
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafPanelLayout _nanoLeafPanelLayout;
 
+        private string _apiMessage;
+
         public NanoLeafPanelLayoutTests()
         {
             _responseMessage = new HttpResponseMessage();
             var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
 
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            Action<HttpRequestMessage, CancellationToken> callback
+                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
+            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
 
+            var apiContext = new NanoLeafApiContext("token", httpClient);
             _nanoLeafPanelLayout = new NanoLeafPanelLayout(apiContext);
         }
 
@@ -33,6 +40,16 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(5, panelOrientation.CurrentValue);
             Assert.Equal(360, panelOrientation.MaxValue);
             Assert.Equal(0, panelOrientation.MinValue);
+        }
+
+        [Fact]
+        public async Task SetGlobalPanelOrientationAsync_SetGlobalOrientation_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafPanelLayout.SetGlobalPanelOrientationAsync(45);
+
+            // Assert
+            Assert.Equal("{'globalOrientation': {'value': 45}}", _apiMessage);
         }
 
         [Fact]

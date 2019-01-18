@@ -28,7 +28,7 @@ namespace NanoLeaf.API
         /// <inheritdoc />
         public Task SetPowerStateAsync(bool state)
         {
-            var bodyContent = "{'on': {'value': '" + state + "'}}";
+            var bodyContent = "{'on': {'value': " + state.ToString().ToLower() + "}}";
             var body = new StringContent(bodyContent);
 
             return _apiContext.HttpClient.PutAsync($"{_apiContext.AuthToken}/state", body);

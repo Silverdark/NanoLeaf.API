@@ -26,7 +26,7 @@ namespace NanoLeaf.API
         /// <inheritdoc />
         public Task SetGlobalPanelOrientationAsync(int globalOrientation)
         {
-            var bodyContent = "{'globalOrientation': {'value': '" + globalOrientation + "'}}";
+            var bodyContent = "{'globalOrientation': {'value': " + globalOrientation + "}}";
             var body = new StringContent(bodyContent);
 
             return _apiContext.HttpClient.PutAsync($"{_apiContext.AuthToken}/state", body);

@@ -40,7 +40,7 @@ namespace NanoLeaf.API
         /// <inheritdoc />
         public Task<string> GetDeviceInformationAsync()
         {
-            // TODO: Implement more complex structure
+            // TODO: Implement more complex structure + Test
             return _apiContext.HttpClient.GetStringAsync(AuthorizationToken);
         }
 

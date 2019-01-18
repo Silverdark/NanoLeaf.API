@@ -19,12 +19,23 @@ namespace NanoLeaf.API.Tests.TestHelpers
                 .ReturnsAsync(responseMessage)
             ;
 
-            var httpClient = new HttpClient(httpMessageHandlerMock.Object)
-            {
-                BaseAddress = new Uri("http://localhost/")
-            };
+            var httpClientMock = new Mock<HttpClient>(httpMessageHandlerMock.Object);
+
+            var httpClient = httpClientMock.Object;
+            httpClient.BaseAddress = new Uri("http://localhost/");
 
             return httpClient;
+        }
+
+        public static void SetSendAsyncCallback(HttpClient client, Action<HttpRequestMessage, CancellationToken> action)
+        {
+            var httpClientMock = Mock.Get(client);
+
+            httpClientMock
+                .Setup(m => m.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                .CallBase()
+                .Callback(action)
+            ;
         }
     }
 }

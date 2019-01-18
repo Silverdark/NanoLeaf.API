@@ -1,5 +1,7 @@
 using NanoLeaf.API.Tests.TestHelpers;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -10,13 +12,18 @@ namespace NanoLeaf.API.Tests
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafState _nanoLeafState;
 
+        private string _apiMessage;
+
         public NanoLeafStateTests()
         {
             _responseMessage = new HttpResponseMessage();
             var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
 
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            Action<HttpRequestMessage, CancellationToken> callback 
+                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
+            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
 
+            var apiContext = new NanoLeafApiContext("token", httpClient);
             _nanoLeafState = new NanoLeafState(apiContext);
         }
 
@@ -47,6 +54,26 @@ namespace NanoLeaf.API.Tests
         }
 
         [Fact]
+        public async Task SetPowerStateAsync_SetPowerOn_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetPowerStateAsync(true);
+
+            // Assert
+            Assert.Equal("{'on': {'value': true}}", _apiMessage);
+        }
+
+        [Fact]
+        public async Task SetPowerStateAsync_SetPowerOff_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetPowerStateAsync(false);
+
+            // Assert
+            Assert.Equal("{'on': {'value': false}}", _apiMessage);
+        }
+
+        [Fact]
         public async Task GetBrightnessAsync_Default_GetValues()
         {
             // Arrange
@@ -59,6 +86,26 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(95, brightness.CurrentValue);
             Assert.Equal(100, brightness.MaxValue);
             Assert.Equal(0, brightness.MinValue);
+        }
+
+        [Fact]
+        public async Task SetBrightnessAsync_BrightnessWithDuration_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetBrightnessAsync(125, 20);
+
+            // Assert
+            Assert.Equal("{'brightness': {'value': 125, 'duration': 20}}", _apiMessage);
+        }
+
+        [Fact]
+        public async Task SetBrightnessAsync_BrightnessWithoutDuration_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetBrightnessAsync(125);
+
+            // Assert
+            Assert.Equal("{'brightness': {'value': 125}}", _apiMessage);
         }
 
         [Fact]
@@ -77,6 +124,16 @@ namespace NanoLeaf.API.Tests
         }
 
         [Fact]
+        public async Task SetHueAsync_WithHueValue_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetHueAsync(123);
+
+            // Assert
+            Assert.Equal("{'hue': {'value': 123}}", _apiMessage);
+        }
+
+        [Fact]
         public async Task GetSaturationAsync_Default_GetValues()
         {
             // Arrange
@@ -92,6 +149,16 @@ namespace NanoLeaf.API.Tests
         }
 
         [Fact]
+        public async Task SetSaturationAsync_WithSaturationValue_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetSaturationAsync(321);
+
+            // Assert
+            Assert.Equal("{'sat': {'value': 321}}", _apiMessage);
+        }
+
+        [Fact]
         public async Task GetColorTemperatureAsync_Default_GetValues()
         {
             // Arrange
@@ -104,6 +171,16 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(95, colorTemperature.CurrentValue);
             Assert.Equal(100, colorTemperature.MaxValue);
             Assert.Equal(0, colorTemperature.MinValue);
+        }
+
+        [Fact]
+        public async Task SetColorTemperatureAsync_WithColorTemperatureValue_CorrectApiMessage()
+        {
+            // Act
+            await _nanoLeafState.SetColorTemperatureAsync(4000);
+
+            // Assert
+            Assert.Equal("{'ct': {'value': 4000}}", _apiMessage);
         }
 
         [Fact]
