@@ -1,24 +1,25 @@
-﻿using NanoLeaf.API.Models;
+﻿using System.Threading.Tasks;
+using NanoLeaf.API.Models;
 
 namespace NanoLeaf.API.Contracts
 {
     public interface INanoLeafState
     {
-        bool GetPowerState();
-        void SetPowerState(bool state);
+        Task<bool> GetPowerStateAsync();
+        Task SetPowerStateAsync(bool state);
 
-        ValueInformation GetBrightness();
-        void SetBrightness(int brightness, int duration = -1);
+        Task<ValueInformation> GetBrightnessAsync();
+        Task SetBrightnessAsync(int brightness, int duration = -1);
 
-        ValueInformation GetHue();
-        void SetHue(int hue);
+        Task<ValueInformation> GetHueAsync();
+        Task SetHueAsync(int hue);
 
-        ValueInformation GetSaturation();
-        void SetSaturation(int saturation);
+        Task<ValueInformation> GetSaturationAsync();
+        Task SetSaturationAsync(int saturation);
 
-        ValueInformation GetColorTemperature();
-        void SetColorTemperature(int colorTemperature);
+        Task<ValueInformation> GetColorTemperatureAsync();
+        Task SetColorTemperatureAsync(int colorTemperature);
 
-        string GetColorMode();
+        Task<string> GetColorModeAsync();
     }
 }

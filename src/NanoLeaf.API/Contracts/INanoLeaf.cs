@@ -1,18 +1,20 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace NanoLeaf.API.Contracts
 {
-    public interface INanoLeaf : IDisposable
+    public interface INanoLeaf
     {
-        bool IsConnected { get; }
+        string AuthorizationToken { get; }
+
         INanoLeafState State { get; }
         INanoLeafEffects Effects { get; }
         INanoLeafPanelLayout PanelLayout { get; }
         INanoLeafRhythm Rhythm { get; }
 
-        string GetDeviceInformation();
-        void RevokeAuthorizationToken();
+        // TODO: More complex structure
+        Task<string> GetDeviceInformationAsync();
+        Task RevokeAuthorizationTokenAsync();
 
-        void IdentityPanel();
+        Task IdentifyPanelAsync();
     }
 }

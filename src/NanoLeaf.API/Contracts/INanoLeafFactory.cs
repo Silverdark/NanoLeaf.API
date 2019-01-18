@@ -1,7 +1,10 @@
-﻿namespace NanoLeaf.API.Contracts
+﻿using System.Threading.Tasks;
+
+namespace NanoLeaf.API.Contracts
 {
     public interface INanoLeafFactory
     {
-        INanoLeaf CreateNanoLeaf();
+        Task<INanoLeaf> CreateNanoLeafAsync();
+        INanoLeaf CreateNanoLeaf(string authorizationToken);
     }
 }
