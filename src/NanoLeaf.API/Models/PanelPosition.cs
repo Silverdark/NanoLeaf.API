@@ -1,4 +1,6 @@
-﻿namespace NanoLeaf.API.Models
+﻿using Newtonsoft.Json;
+
+namespace NanoLeaf.API.Models
 {
     public class PanelPosition
     {
@@ -10,9 +12,16 @@
             Orientation = orientation;
         }
 
+        [JsonProperty("panelId")]
         public int PanelId { get; }
+
+        [JsonProperty("x")]
         public int X { get; }
+
+        [JsonProperty("y")]
         public int Y { get; }
+
+        [JsonProperty("o")]
         public int Orientation { get; }
     }
 }

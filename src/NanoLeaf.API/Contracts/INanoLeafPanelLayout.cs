@@ -1,12 +1,13 @@
 ﻿using NanoLeaf.API.Models;
+using System.Threading.Tasks;
 
 namespace NanoLeaf.API.Contracts
 {
     public interface INanoLeafPanelLayout
     {
-        ValueInformation GetGlobalPanelOrientation();
-        void SetGlobalPanelOrientation();
+        Task<ValueInformation> GetGlobalPanelOrientationAsync();
+        Task SetGlobalPanelOrientationAsync(int globalOrientation);
 
-        PanelLayout GetPanelLayout();
+        Task<PanelLayout> GetPanelLayoutAsync();
     }
 }

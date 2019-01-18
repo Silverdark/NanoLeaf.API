@@ -38,9 +38,7 @@ namespace NanoLeaf.API
         public async Task<ValueInformation> GetBrightnessAsync()
         {
             var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/state/brightness");
-            dynamic jsonData = JsonConvert.DeserializeObject(content);
-
-            return new ValueInformation((int) jsonData["value"], (int) jsonData["max"], (int) jsonData["min"]);
+            return JsonConvert.DeserializeObject<ValueInformation>(content);
         }
 
         /// <inheritdoc />
@@ -59,9 +57,7 @@ namespace NanoLeaf.API
         public async Task<ValueInformation> GetHueAsync()
         {
             var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/state/hue");
-            dynamic jsonData = JsonConvert.DeserializeObject(content);
-
-            return new ValueInformation((int) jsonData["value"], (int) jsonData["max"], (int) jsonData["min"]);
+            return JsonConvert.DeserializeObject<ValueInformation>(content);
         }
 
         /// <inheritdoc />
@@ -77,9 +73,7 @@ namespace NanoLeaf.API
         public async Task<ValueInformation> GetSaturationAsync()
         {
             var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/state/sat");
-            dynamic jsonData = JsonConvert.DeserializeObject(content);
-
-            return new ValueInformation((int) jsonData["value"], (int) jsonData["max"], (int) jsonData["min"]);
+            return JsonConvert.DeserializeObject<ValueInformation>(content);
         }
 
         /// <inheritdoc />
@@ -95,9 +89,7 @@ namespace NanoLeaf.API
         public async Task<ValueInformation> GetColorTemperatureAsync()
         {
             var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/state/ct");
-            dynamic jsonData = JsonConvert.DeserializeObject(content);
-
-            return new ValueInformation((int) jsonData["value"], (int) jsonData["max"], (int) jsonData["min"]);
+            return JsonConvert.DeserializeObject<ValueInformation>(content);
         }
 
         /// <inheritdoc />

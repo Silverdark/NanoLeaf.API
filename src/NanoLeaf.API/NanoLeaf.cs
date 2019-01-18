@@ -17,6 +17,7 @@ namespace NanoLeaf.API
 
             State = new NanoLeafState(_apiContext);
             Effects = new NanoLeafEffects(_apiContext);
+            PanelLayout = new NanoLeafPanelLayout(_apiContext);
         }
 
         /// <inheritdoc />

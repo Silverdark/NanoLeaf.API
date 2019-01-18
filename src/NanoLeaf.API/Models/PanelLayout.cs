@@ -1,4 +1,6 @@
-﻿namespace NanoLeaf.API.Models
+﻿using Newtonsoft.Json;
+
+namespace NanoLeaf.API.Models
 {
     public class PanelLayout
     {
@@ -9,8 +11,13 @@
             PanelPositions = panelPositions;
         }
 
+        [JsonProperty("numPanels")]
         public int NumberOfPanels { get; }
+
+        [JsonProperty("sideLength")]
         public int SideLength { get; }
+
+        [JsonProperty("positionData")]
         public PanelPosition[] PanelPositions { get; }
     }
 }
