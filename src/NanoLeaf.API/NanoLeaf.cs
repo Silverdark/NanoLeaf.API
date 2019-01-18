@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NanoLeaf.API.Contracts;
+using System;
 using System.Runtime.CompilerServices;
-using NanoLeaf.API.Contracts;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("NanoLeaf.API.Tests")]
@@ -16,6 +16,7 @@ namespace NanoLeaf.API
             _apiContext = apiContext ?? throw new ArgumentNullException(nameof(apiContext));
 
             State = new NanoLeafState(_apiContext);
+            Effects = new NanoLeafEffects(_apiContext);
         }
 
         /// <inheritdoc />
