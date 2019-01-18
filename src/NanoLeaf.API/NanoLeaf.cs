@@ -3,6 +3,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+// Only single time in assembly necessary
 [assembly: InternalsVisibleTo("NanoLeaf.API.Tests")]
 
 namespace NanoLeaf.API
@@ -18,6 +19,7 @@ namespace NanoLeaf.API
             State = new NanoLeafState(_apiContext);
             Effects = new NanoLeafEffects(_apiContext);
             PanelLayout = new NanoLeafPanelLayout(_apiContext);
+            Rhythm = new NanoLeafRhythm(_apiContext);
         }
 
         /// <inheritdoc />

@@ -1,21 +1,22 @@
 ﻿using NanoLeaf.API.Models;
+using System.Threading.Tasks;
 
 namespace NanoLeaf.API.Contracts
 {
     public interface INanoLeafRhythm
     {
-        bool IsConnected();
-        bool IsActive();
-        int GetId();
-        string GetHardwareVersion();
-        string GetFirmwareVersion();
-        PositionOrientation GetPosition();
+        Task<bool> IsConnectedAsync();
+        Task<bool> IsActiveAsync();
+        Task<int> GetIdAsync();
+        Task<string> GetHardwareVersionAsync();
+        Task<string> GetFirmwareVersionAsync();
+        Task<PositionOrientation> GetPositionAsync();
 
-        bool UsesMicrophone();
-        void SetUseMicrophone();
+        Task<bool> UsesMicrophoneAsync();
+        Task SetUseMicrophoneAsync();
 
-        bool IsAuxCableAvailable();
-        bool UsesAuxCable();
-        void SetUseAuxCable();
+        Task<bool> IsAuxCableAvailableAsync();
+        Task<bool> UsesAuxCableAsync();
+        Task SetUseAuxCableAsync();
     }
 }

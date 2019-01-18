@@ -1,6 +1,6 @@
-﻿using System.Net.Http;
+﻿using NanoLeaf.API.Tests.TestHelpers;
+using System.Net.Http;
 using System.Threading.Tasks;
-using NanoLeaf.API.Tests.TestHelpers;
 using Xunit;
 
 namespace NanoLeaf.API.Tests
