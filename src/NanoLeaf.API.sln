@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AB68BC3C-8FF4-4C8D-906D-422733B251D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NanoLeaf.API", "NanoLeaf.API\NanoLeaf.API.csproj", "{48337375-9B4F-4963-A105-3E3052F4989E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NanoLeaf.API.Tests", "NanoLeaf.API.Tests\NanoLeaf.API.Tests.csproj", "{2D7AD0EB-44C0-4705-96CB-3EF11C59229C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NanoLeaf.API.BasicExample", "NanoLeaf.API.BasicExample\NanoLeaf.API.BasicExample.csproj", "{0071CE8C-673E-4055-A990-3DA569A7F1CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48337375-9B4F-4963-A105-3E3052F4989E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48337375-9B4F-4963-A105-3E3052F4989E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48337375-9B4F-4963-A105-3E3052F4989E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48337375-9B4F-4963-A105-3E3052F4989E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7AD0EB-44C0-4705-96CB-3EF11C59229C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7AD0EB-44C0-4705-96CB-3EF11C59229C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7AD0EB-44C0-4705-96CB-3EF11C59229C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7AD0EB-44C0-4705-96CB-3EF11C59229C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0071CE8C-673E-4055-A990-3DA569A7F1CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0071CE8C-673E-4055-A990-3DA569A7F1CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0071CE8C-673E-4055-A990-3DA569A7F1CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0071CE8C-673E-4055-A990-3DA569A7F1CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48337375-9B4F-4963-A105-3E3052F4989E} = {AB68BC3C-8FF4-4C8D-906D-422733B251D5}
+		{2D7AD0EB-44C0-4705-96CB-3EF11C59229C} = {AB68BC3C-8FF4-4C8D-906D-422733B251D5}
+		{0071CE8C-673E-4055-A990-3DA569A7F1CD} = {AB68BC3C-8FF4-4C8D-906D-422733B251D5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9128D00-F172-426A-A82E-D71C13A8BCB1}
+	EndGlobalSection
+EndGlobal
