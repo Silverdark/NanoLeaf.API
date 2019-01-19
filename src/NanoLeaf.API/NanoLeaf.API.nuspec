@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>nanoleaf.api</id>
+    <version>1.0.0</version>
+    <title>NanoLeaf API</title>
+    <authors>Silverdark</authors>
+    <owners>Silverdark</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Silverdark/NanoLeaf.API</projectUrl>
+    <repository type="git" url="https://github.com/Silverdark/NanoLeaf.API" />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Offers a wrapper for the NanoLeaf API</description>
+    <summary>Offers a wrapper for the NanoLeaf API</summary>
+    <copyright>Copyright 2019 Silverdark</copyright>
+    <tags>nanoleaf api wrapper</tags>
+    <releaseNotes>Initial version</releaseNotes>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="12.0.0" />
+      <dependency id="Microsoft.CSharp" version="4.5.0" />
+    </dependencies>
+  </metadata>
+</package>
