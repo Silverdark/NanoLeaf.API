@@ -9,7 +9,7 @@ The NanoLeaf C# API is a library which abstracts the "low-level" API calls of th
 
 ## Example project
 
-There's an example project under `src/NanoLeaf.API.BasicExample` which prints some basic information about a NanoLeaf controller. With the usage of the [Public Postman API](https://documenter.getpostman.com/view/1559645/RW1gEcCH#701416c8-2660-453c-bcd2-e2b72290171a) I could mock the requests with following result:
+There's an example project under `src/NanoLeaf.API.BasicExample` which prints some basic information about a NanoLeaf controller. With the usage of the [Public Postman API](https://documenter.getpostman.com/view/1559645/RW1gEcCH#701416c8-2660-453c-bcd2-e2b72290171a) I have mocked the requests with following result:
 
 ![image](https://user-images.githubusercontent.com/3630571/51432907-0cd0b580-1c40-11e9-8cf4-f3a98ff18b4a.png)
 
