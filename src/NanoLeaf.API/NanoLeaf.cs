@@ -1,4 +1,6 @@
 ﻿using NanoLeaf.API.Contracts;
+using NanoLeaf.API.Models;
+using Newtonsoft.Json;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -38,10 +40,10 @@ namespace NanoLeaf.API
         public INanoLeafRhythm Rhythm { get; }
 
         /// <inheritdoc />
-        public Task<string> GetDeviceInformationAsync()
+        public async Task<ControllerInfo> GetDeviceInformationAsync()
         {
-            // TODO: Implement more complex structure + Test
-            return _apiContext.HttpClient.GetStringAsync(AuthorizationToken);
+            var content = await _apiContext.HttpClient.GetStringAsync(AuthorizationToken);
+            return JsonConvert.DeserializeObject<ControllerInfo>(content);
         }
 
         /// <inheritdoc />

@@ -4,20 +4,13 @@ namespace NanoLeaf.API.Models
 {
     public class PositionOrientation
     {
-        public PositionOrientation(int x, int y, int orientation)
-        {
-            X = x;
-            Y = y;
-            Orientation = orientation;
-        }
-
         [JsonProperty("x")]
-        public int X { get; }
+        public int X { get; set; }
 
         [JsonProperty("y")]
-        public int Y { get; }
+        public int Y { get; set; }
 
         [JsonProperty("o")]
-        public int Orientation { get; }
+        public int Orientation { get; set; }
     }
 }

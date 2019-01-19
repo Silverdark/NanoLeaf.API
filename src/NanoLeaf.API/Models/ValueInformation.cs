@@ -4,20 +4,13 @@ namespace NanoLeaf.API.Models
 {
     public class ValueInformation
     {
-        public ValueInformation(int currentValue, int maxValue, int minValue)
-        {
-            CurrentValue = currentValue;
-            MaxValue = maxValue;
-            MinValue = minValue;
-        }
-
         [JsonProperty("value")]
-        public int CurrentValue { get; }
+        public int CurrentValue { get; set; }
 
         [JsonProperty("max")]
-        public int MaxValue { get; }
+        public int MaxValue { get; set; }
 
         [JsonProperty("min")]
-        public int MinValue { get; }
+        public int MinValue { get; set; }
     }
 }

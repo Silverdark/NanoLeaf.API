@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using NanoLeaf.API.Models;
+using System.Threading.Tasks;
 
 namespace NanoLeaf.API.Contracts
 {
@@ -11,8 +12,7 @@ namespace NanoLeaf.API.Contracts
         INanoLeafPanelLayout PanelLayout { get; }
         INanoLeafRhythm Rhythm { get; }
 
-        // TODO: More complex structure
-        Task<string> GetDeviceInformationAsync();
+        Task<ControllerInfo> GetDeviceInformationAsync();
         Task RevokeAuthorizationTokenAsync();
 
         Task IdentifyPanelAsync();
