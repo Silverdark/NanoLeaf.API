@@ -19,10 +19,10 @@ namespace NanoLeaf.API.Tests.TestHelpers
                 .ReturnsAsync(responseMessage)
             ;
 
-            var httpClientMock = new Mock<HttpClient>(httpMessageHandlerMock.Object);
+            var httpClientMock = new Mock<HttpClient>(httpMessageHandlerMock.Object) { CallBase = true };
 
             var httpClient = httpClientMock.Object;
-            httpClient.BaseAddress = new Uri("http://localhost/");
+            httpClient.BaseAddress = new Uri("http://localhost/api/v1/");
 
             return httpClient;
         }

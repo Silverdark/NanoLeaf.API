@@ -35,7 +35,7 @@ namespace NanoLeaf.API
         /// <inheritdoc />
         public async Task<PanelLayout> GetPanelLayoutAsync()
         {
-            var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/panelLayout/globalOrientation");
+            var content = await _apiContext.HttpClient.GetStringAsync($"{_apiContext.AuthToken}/panelLayout/layout");
             return JsonConvert.DeserializeObject<PanelLayout>(content);
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NanoLeaf.API
 {
-    internal class NanoLeafFactory : INanoLeafFactory
+    public class NanoLeafFactory : INanoLeafFactory
     {
         private readonly HttpClient _httpClient;
 
@@ -37,7 +37,8 @@ namespace NanoLeaf.API
 
         private async Task<string> CreateAuthorizationTokenAsync()
         {
-            var content = await _httpClient.GetStringAsync("new");
+            var response = await _httpClient.PostAsync("new", null);
+            var content = await response.Content.ReadAsStringAsync();
             dynamic jsonData = JsonConvert.DeserializeObject(content);
 
             return jsonData["auth_token"];
