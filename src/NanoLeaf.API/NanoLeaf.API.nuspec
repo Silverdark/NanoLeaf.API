@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>nanoleaf.api</id>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <title>NanoLeaf API</title>
     <authors>Silverdark</authors>
     <owners>Silverdark</owners>
@@ -14,7 +14,6 @@
     <summary>Offers a wrapper for the NanoLeaf API</summary>
     <copyright>Copyright 2019 Silverdark</copyright>
     <tags>nanoleaf api wrapper</tags>
-    <releaseNotes>Initial version</releaseNotes>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="12.0.0" />
       <dependency id="Microsoft.CSharp" version="4.5.0" />

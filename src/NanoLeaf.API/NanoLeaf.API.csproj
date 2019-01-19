@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Silverdark</Authors>
+    <PackageId>nanoleaf.api</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
