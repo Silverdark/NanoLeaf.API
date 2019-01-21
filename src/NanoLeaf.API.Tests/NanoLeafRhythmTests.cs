@@ -1,7 +1,5 @@
 ﻿using NanoLeaf.API.Tests.TestHelpers;
-using System;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,21 +7,19 @@ namespace NanoLeaf.API.Tests
 {
     public class NanoLeafRhythmTests
     {
+        private const string AuthToken = "token";
+
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafRhythm _nanoLeafRhythm;
 
-        private string _apiMessage;
+        private HttpRequestMessage _requestMessage;
 
         public NanoLeafRhythmTests()
         {
             _responseMessage = new HttpResponseMessage();
-            var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
+            var httpClient = HttpClientHelper.GetMockedClient(_responseMessage, message => _requestMessage = message);
 
-            Action<HttpRequestMessage, CancellationToken> callback
-                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
-            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
-
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            var apiContext = new NanoLeafApiContext(AuthToken, httpClient);
             _nanoLeafRhythm = new NanoLeafRhythm(apiContext);
         }
 
@@ -38,6 +34,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.True(isConnected);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmConnected", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -51,6 +50,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(isConnected);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmConnected", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -64,6 +66,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.True(isConnected);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmActive", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -77,6 +82,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(isConnected);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmActive", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -90,6 +98,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.Equal(123, id);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmId", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -103,6 +114,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.Equal("1.4", hardwareVersion);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/hardwareVersion", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -116,6 +130,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.Equal("2.0", firmwareVersion);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/firmwareVersion", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -131,6 +148,9 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(0, position.X);
             Assert.Equal(173, position.Y);
             Assert.Equal(60, position.Orientation);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmPos", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -144,6 +164,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.True(usesMicrophone);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -153,7 +176,10 @@ namespace NanoLeaf.API.Tests
             await _nanoLeafRhythm.SetUseMicrophoneAsync();
 
             // Assert
-            Assert.Equal("{'rhythmMode': 0}", _apiMessage);
+            Assert.Equal("{'rhythmMode': 0}", await _requestMessage.Content.ReadAsStringAsync());
+
+            Assert.Equal(HttpMethod.Put, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -167,6 +193,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(usesMicrophone);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -180,6 +209,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.True(auxAvailable);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/auxAvailable", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -193,6 +225,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(auxAvailable);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/auxAvailable", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -206,6 +241,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.True(usesAuxCable);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -219,6 +257,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.False(usesAuxCable);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -228,7 +269,10 @@ namespace NanoLeaf.API.Tests
             await _nanoLeafRhythm.SetUseAuxCableAsync();
 
             // Assert
-            Assert.Equal("{'rhythmMode': 1}", _apiMessage);
+            Assert.Equal("{'rhythmMode': 1}", await _requestMessage.Content.ReadAsStringAsync());
+
+            Assert.Equal(HttpMethod.Put, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/rhythm/rhythmMode", _requestMessage.RequestUri.AbsolutePath);
         }
     }
 }

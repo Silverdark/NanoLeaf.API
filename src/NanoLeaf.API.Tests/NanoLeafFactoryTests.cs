@@ -11,10 +11,12 @@ namespace NanoLeaf.API.Tests
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafFactory _nanoLeafFactory;
 
+        private HttpRequestMessage _requestMessage;
+
         public NanoLeafFactoryTests()
         {
             _responseMessage = new HttpResponseMessage();
-            var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
+            var httpClient = HttpClientHelper.GetMockedClient(_responseMessage, message => _requestMessage = message);
 
             _nanoLeafFactory = new NanoLeafFactory(httpClient);
         }
@@ -33,6 +35,9 @@ namespace NanoLeaf.API.Tests
 
             // Assert
             Assert.Equal(authToken, nanoLeaf.AuthorizationToken);
+
+            Assert.Equal(HttpMethod.Post, _requestMessage.Method);
+            Assert.Equal("/api/v1/new", _requestMessage.RequestUri.AbsolutePath);
         }
     }
 }

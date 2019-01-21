@@ -29,7 +29,7 @@ namespace NanoLeaf.API
             var bodyContent = "{'globalOrientation': {'value': " + globalOrientation + "}}";
             var body = new StringContent(bodyContent);
 
-            return _apiContext.HttpClient.PutAsync($"{_apiContext.AuthToken}/state", body);
+            return _apiContext.HttpClient.PutAsync($"{_apiContext.AuthToken}/panelLayout", body);
         }
 
         /// <inheritdoc />

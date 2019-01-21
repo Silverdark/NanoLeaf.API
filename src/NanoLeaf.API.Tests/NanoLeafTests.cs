@@ -7,15 +7,19 @@ namespace NanoLeaf.API.Tests
 {
     public class NanoLeafTests
     {
+        private const string AuthToken = "token";
+
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeaf _nanoLeaf;
+
+        private HttpRequestMessage _requestMessage;
 
         public NanoLeafTests()
         {
             _responseMessage = new HttpResponseMessage();
-            var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
+            var httpClient = HttpClientHelper.GetMockedClient(_responseMessage, message => _requestMessage = message);
 
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            var apiContext = new NanoLeafApiContext(AuthToken, httpClient);
             _nanoLeaf = new NanoLeaf(apiContext);
         }
 
@@ -71,6 +75,31 @@ namespace NanoLeaf.API.Tests
             Assert.Null(deviceInformation.Rhythm.IsAuxCableAvailable);
             Assert.Null(deviceInformation.Rhythm.RhythmMode);
             Assert.Null(deviceInformation.Rhythm.Position);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}", _requestMessage.RequestUri.AbsolutePath);
+        }
+
+        [Fact]
+        public async Task RevokeAuthorizationTokenAsync_Default_CallsCorrectAPI()
+        {
+            // Act
+            await _nanoLeaf.RevokeAuthorizationTokenAsync();
+
+            // Assert
+            Assert.Equal(HttpMethod.Delete, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}", _requestMessage.RequestUri.AbsolutePath);
+        }
+
+        [Fact]
+        public async Task IdentifyPanelAsync_Default_CallsCorrectAPI()
+        {
+            // Act
+            await _nanoLeaf.IdentifyPanelAsync();
+
+            // Assert
+            Assert.Equal(HttpMethod.Put, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/identify", _requestMessage.RequestUri.AbsolutePath);
         }
     }
 }

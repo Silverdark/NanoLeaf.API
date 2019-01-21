@@ -1,7 +1,5 @@
 ﻿using NanoLeaf.API.Tests.TestHelpers;
-using System;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,21 +7,19 @@ namespace NanoLeaf.API.Tests
 {
     public class NanoLeafPanelLayoutTests
     {
+        private const string AuthToken = "token";
+
         private readonly HttpResponseMessage _responseMessage;
         private readonly NanoLeafPanelLayout _nanoLeafPanelLayout;
 
-        private string _apiMessage;
+        private HttpRequestMessage _requestMessage;
 
         public NanoLeafPanelLayoutTests()
         {
             _responseMessage = new HttpResponseMessage();
-            var httpClient = HttpClientHelper.GetClientWithCustomResponse(_responseMessage);
+            var httpClient = HttpClientHelper.GetMockedClient(_responseMessage, message => _requestMessage = message);
 
-            Action<HttpRequestMessage, CancellationToken> callback
-                = async (message, token) => _apiMessage = await message.Content.ReadAsStringAsync();
-            HttpClientHelper.SetSendAsyncCallback(httpClient, callback);
-
-            var apiContext = new NanoLeafApiContext("token", httpClient);
+            var apiContext = new NanoLeafApiContext(AuthToken, httpClient);
             _nanoLeafPanelLayout = new NanoLeafPanelLayout(apiContext);
         }
 
@@ -40,6 +36,9 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(5, panelOrientation.CurrentValue);
             Assert.Equal(360, panelOrientation.MaxValue);
             Assert.Equal(0, panelOrientation.MinValue);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/panelLayout/globalOrientation", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -49,7 +48,10 @@ namespace NanoLeaf.API.Tests
             await _nanoLeafPanelLayout.SetGlobalPanelOrientationAsync(45);
 
             // Assert
-            Assert.Equal("{'globalOrientation': {'value': 45}}", _apiMessage);
+            Assert.Equal("{'globalOrientation': {'value': 45}}", await _requestMessage.Content.ReadAsStringAsync());
+
+            Assert.Equal(HttpMethod.Put, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/panelLayout", _requestMessage.RequestUri.AbsolutePath);
         }
 
         [Fact]
@@ -76,6 +78,9 @@ namespace NanoLeaf.API.Tests
             Assert.Equal(-74, panelLayout.PanelPositions[1].X);
             Assert.Equal(129, panelLayout.PanelPositions[1].Y);
             Assert.Equal(0, panelLayout.PanelPositions[1].Orientation);
+
+            Assert.Equal(HttpMethod.Get, _requestMessage.Method);
+            Assert.Equal($"/api/v1/{AuthToken}/panelLayout/layout", _requestMessage.RequestUri.AbsolutePath);
         }
     }
 }
